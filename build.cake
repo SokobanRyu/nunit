@@ -771,7 +771,7 @@ Task("PackageMsi")
     .WithCriteria(IsRunningOnWindows)
     .Does(() =>
     {
-        MSBuild("install/master/nunit.wixproj", new MSBuildSettings()
+        MSBuild("install/nunit/nunit.wixproj", new MSBuildSettings()
             .WithTarget("Rebuild")
             .SetConfiguration(configuration)
             .WithProperty("PackageVersion", packageVersion)
@@ -1001,9 +1001,9 @@ Task("Package")
     .IsDependentOn("PackageEngine")
     .IsDependentOn("PackageExtensions")
     .IsDependentOn("PackageConsole")
-    // The following two package  targets include framework, engine and console components
-    .IsDependentOn("PackageZip")
-    .IsDependentOn("PackageMsi");
+    .IsDependentOn("PackageMsi")
+    //PackageZip includes framework, engine and console components
+    .IsDependentOn("PackageZip");
 
 Task("Appveyor")
     .IsDependentOn("Build")
